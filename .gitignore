@@ -1,0 +1,6 @@
+household_power_consumption.txt
+.Rhistory
+/data
+/data/*
+/figure/*
+!/figure/unnamed-chunk-*
