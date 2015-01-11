@@ -1,4 +1,4 @@
-## Construct Plot 1 for Exploratory Data Analysis, Course Project 1
+## Construct Plot 2 for Exploratory Data Analysis, Course Project 1
 
 ## Library needed for fread
 library(data.table)
@@ -28,22 +28,26 @@ setnames(data, 7, "Sub_metering_1")
 setnames(data, 8, "Sub_metering_2")
 setnames(data, 9, "Sub_metering_3")
 
-## Combine Day and Time into one single variable, not needed in plot 1
+## Combine Day and Time into one single variable
 data$DateTime <- as.POSIXct(paste(data$Date, data$Time), format="%d/%m/%Y %H:%M:%S")
+
+## Ensure that the names of the weekdays are given in English
+Sys.setlocale("LC_TIME", "C")
 
 ## Redirect graphic output to a file of given type, name, size 
 ## and background colour
-png(filename = "plot1.png",
+png(filename = "plot2.png",
     width = 480, 
     height = 480,
     bg = "transparent"
 )
 
-## Construct histogram with given colour and title / axis names
-hist(data$Global_active_power, 
-     col = "Red", 
-     main = "Global Active Power", 
-     xlab = "Global Active Power (kilowatts)"
+## Plot power consumption vs. day, as in the given file
+plot(data$DateTime,
+     data$Global_active_power, 
+     type = "l", 
+     xlab = "",
+     ylab = "Global Active Power (kilowatts)"
 )
 
 ## Close graphic file

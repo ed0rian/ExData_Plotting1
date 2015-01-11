@@ -1,4 +1,4 @@
-## Construct Plot 1 for Exploratory Data Analysis, Course Project 1
+## Construct Plot 3 for Exploratory Data Analysis, Course Project 1
 
 ## Library needed for fread
 library(data.table)
@@ -28,22 +28,50 @@ setnames(data, 7, "Sub_metering_1")
 setnames(data, 8, "Sub_metering_2")
 setnames(data, 9, "Sub_metering_3")
 
-## Combine Day and Time into one single variable, not needed in plot 1
+## Combine Day and Time into one single variable
 data$DateTime <- as.POSIXct(paste(data$Date, data$Time), format="%d/%m/%Y %H:%M:%S")
+
+## Ensure that the names of the weekdays are given in English
+Sys.setlocale("LC_TIME", "C")
 
 ## Redirect graphic output to a file of given type, name, size 
 ## and background colour
-png(filename = "plot1.png",
+png(filename = "plot3.png",
     width = 480, 
     height = 480,
     bg = "transparent"
 )
 
-## Construct histogram with given colour and title / axis names
-hist(data$Global_active_power, 
-     col = "Red", 
-     main = "Global Active Power", 
-     xlab = "Global Active Power (kilowatts)"
+## Plot Sub_metering_1 vs. time
+## Plot-labels defined here
+with(data, plot(DateTime, 
+                Sub_metering_1,
+                type = "l", 
+                col = "black",
+                xlab = "",
+                ylab = "Energy sub metering"
+           )
+)
+## Draw Sub_metering_2 vs. time on previous plot
+with(data, lines(DateTime, 
+                 Sub_metering_2,
+                 col = "red"
+           )
+)
+## Draw Sub_metering_3 vs. time on previous plot
+with(data, lines(DateTime, 
+                 Sub_metering_3,
+                 col = "blue"
+           )
+)
+## Add legend to previous plot
+legend("topright",                          # Legend position
+       lty = c(1, 1, 1),                    # Legend symbols
+       col = c("black", "red", "blue"),     # Legend colours
+       legend = c("Sub_metering_1",
+                  "Sub_metering_2",
+                  "Sub_metering_3"
+                )
 )
 
 ## Close graphic file
